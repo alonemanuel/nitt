@@ -1,0 +1,191 @@
+@font-face {
+  font-family: SimplerMono;
+  font-weight: 400;
+  src: url(assets/fonts/simpler_mono_hagilda/SimplerPro_HLAR_Mono-Regular.woff);
+}
+@font-face {
+  font-family: SimplerMono;
+  font-weight: 500;
+  src: url(assets/fonts/simpler_mono_hagilda/SimplerPro_HLAR_Mono-Medium.woff);
+}
+@font-face {
+  font-family: SimplerMono;
+  font-weight: 700;
+  src: url(assets/fonts/simpler_mono_hagilda/SimplerPro_HLAR_Mono-Bold.woff);
+}
+
+/* Variables */
+:root {
+  --important: red !important;
+  --mono-family: SimplerMono;
+
+  --tiny-padding: 0.3rem;
+  --small-padding: 0.7rem;
+  --big-padding: 1.5rem;
+  --small-mono-font: 400 1rem/1.2rem SimplerMono;
+  --accent-color: black;
+  --theme-color: blue;
+  --base-font-size: 16px;
+  --gradient-size: 73%;
+}
+style.css
+  style.css
+  /* Reset rules */
+  
+  *,
+  *::before,
+  *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+}
+
+html {
+  /* TODO: Check how to use this. */
+  /* color-scheme: dark light; */
+  font-size: var(--base-font-size);
+}
+
+body {
+  min-width: 100vw;
+  font: var(--small-mono-font);
+  color: var(--accent-color);
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+/* Utilities */
+
+header {
+  color: white;
+  padding: var(--tiny-padding) var(--small-padding);
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tiny-padding);
+}
+
+header > * {
+  background-image: linear-gradient(
+    to right,
+    transparent var(--gradient-size),
+    var(--accent-color) 100%
+  );
+}
+
+header :last-child {
+  margin-inline-start: var(--big-padding);
+  /* text-indent: var(--big-padding); */
+}
+
+.trail {
+  position: absolute;
+  height: 3px;
+  width: 3px;
+  background: black;
+  border-radius: 2px;
+  background: black;
+}
+
+main {
+  padding: var(--small-padding);
+  margin-top: var(--big-padding);
+}
+
+/* main > * :first-child::before {
+  content: ">";
+} */
+
+main > * {
+  /* text-indent: var(--big-padding); */
+  display: grid;
+  /* grid-template-columns: 2fr 3fr; */
+}
+
+ul li,
+ul span {
+  padding-right: 20px;
+}
+
+input {
+  list-style-type: none;
+}
+.input-span {
+  display: block;
+}
+
+li {
+  list-style-type: none;
+  display: block;
+}
+
+input {
+  width: 10ch;
+  border-style: none;
+  /* border-bottom: solid 2px ; */
+  cursor: auto;
+}
+
+/* ul > * > * :not(.ul) ::before {
+  content: ">";
+} */
+
+li > h2::before,
+.input-span::before {
+  /* content: "> \00a0"; */
+  content: ">";
+  margin-left: 0.5rem;
+}
+
+/* .input-span::before {
+  content: ">";
+} */
+
+::selection {
+  color: white;
+  background-color: red;
+}
+
+.selected h2,
+.selected input {
+  color: white;
+  background-color: var(--theme-color);
+}
+
+input:focus-visible {
+  outline-color: var(--theme-color);
+  outline-offset: 1px;
+  background-color: transparent;
+  outline-style: solid;
+  color: var(--theme-color);
+  border-radius: 0;
+  /* background-color: red !important; */
+}
+
+h2 {
+  display: inline-block;
+}
+
+ul {
+  display: none;
+  transition: max-height 0.2s ease-out;
+}
+
+* {
+  cursor: default;
+}
+
+html,
+body {
+  height: 100%;
+}

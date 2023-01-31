@@ -3,6 +3,8 @@ var addTaskButton = document.getElementById('addItemButton');
 var incompleteTasks = document.getElementById('toDo');
 var completedTask = document.getElementById('completedTasks');
 
+const MAGIC_NUMBER = 17;
+
 var data = `{
     "name": "דברים",
     "content": [
@@ -129,6 +131,279 @@ var data = `{
           { "name": "דברים", "content": [{}, {}] },
           { "name": "דברים", "content": [{}, {}] }
         ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
+      },{
+        "name": "מדינות",
+        "content": [
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] },
+          { "name": "דברים", "content": [{}, {}] }
+        ]
       }
     ]
   }
@@ -212,16 +487,18 @@ var lastPressed = -1;
 
 function setAsSelected(element) {
   element.classList.add('selected');
+  // element.style.display = 'inline-block';
 }
 
 function removeAsSelected(element) {
   element.classList.remove('selected');
-  
+  element.style.display = 'block';
+
 }
 
 
 function setBodyOnClick() {
-  document.body.addEventListener('click', function(e) {
+  document.body.addEventListener('click', function (e) {
     console.debug(lastPressed);
     console.debug(`'entered outside`);
     if (lastPressed != -1) {
@@ -234,9 +511,9 @@ function setBodyOnClick() {
 
 function setLiOnClick(clicked, elem, content) {
   clicked.addEventListener('click', function (e) {
-    
+
     if (lastPressed != -1) {
-      lastPressed.classList.remove('selected');
+      removeAsSelected(lastPressed);
     }
     console.debug('/n');
     console.debug(`last pressed: ${lastPressed}`);
@@ -248,12 +525,12 @@ function setLiOnClick(clicked, elem, content) {
     lastPressed = elem;
     content.style.display = (getComputedStyle(content).display == 'none') ? 'block' : 'none';
     // for (let child of content.children) {
-      // child.classList.add('selected');
-      // child.style.color = 'red';
-      
-      // alert(e.currentTarget.textContent);
-      // }
-      e.stopPropagation();
+    // child.classList.add('selected');
+    // child.style.color = 'red';
+
+    // alert(e.currentTarget.textContent);
+    // }
+    e.stopPropagation();
   });
 
 }
@@ -265,6 +542,20 @@ function initJsonObj(prevElem, jObj) {
 
     let listItem = prevElem.appendChild(document.createElement(`li`));
     let itemName = listItem.appendChild(document.createElement(`h2`));
+    // itemName.style.top = `${prevElem.style.top + 25}px`;
+    let prevItemName = prevElem.parentElement.children[0];
+    console.debug(prevItemName);
+    if (window.getComputedStyle(prevItemName).getPropertyValue(`top`) == 'auto') {
+      console.debug(`setting top = 0`);
+      itemName.style.top = `0px`;
+      itemName.style.zIndex = 99999;
+      
+    } else {
+      console.debug(`setting top = ${window.getComputedStyle(prevItemName).getPropertyValue(`top`)}`);
+      itemName.style.top = `${parseInt(window.getComputedStyle(prevItemName).getPropertyValue(`top`)) + MAGIC_NUMBER}px`;
+      itemName.style.zIndex = parseInt(window.getComputedStyle(prevItemName).getPropertyValue('z-index')) - 1;
+
+    }
     itemName.textContent = jObj["name"];
 
     let itemContent = listItem.appendChild(document.createElement('ul'));

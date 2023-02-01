@@ -82,7 +82,7 @@ header {
 }
 
 header > * {
-  background-image: linear-gradient(to left, var(--accent-color), white);
+  background-image: linear-gradient(to left, var(--accent-color) 80%, white);
 }
 
 header :last-child {

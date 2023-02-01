@@ -246,3 +246,7 @@ h2.thought::before {
 .selected *::before {
   color: white;
 }
+
+body {
+  padding-bottom: 200px;
+}

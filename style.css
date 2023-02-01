@@ -169,7 +169,6 @@ input {
   border-bottom-style: dashed;
   border-bottom-width: 2px;
   color: var(--theme-color);
-
 }
 
 input:focus-visible {
@@ -203,7 +202,6 @@ ul {
   transition: max-height 0.2s ease-out;
   background: white;
   z-index: 99999999;
-
 }
 
 * {
@@ -222,7 +220,7 @@ input {
   pointer-events: all;
 }
 
-h2.thought{
+h2.thought {
   font-family: VcDavid;
   font-size: 0.9rem;
   font-weight: 700;
@@ -231,13 +229,20 @@ h2.thought{
   /* text-decoration-style: solid; */
   padding-bottom: 4px;
   text-underline-offset: 2px;
-  
 }
 
 h2.thought::before {
-  content: '$';
+  content: "$";
   font-family: SimplerMono;
   font-weight: 400;
   display: inline-block;
   text-decoration: none;
+}
+
+*::before {
+  color: black;
+}
+
+.selected *::before {
+  color: white;
 }

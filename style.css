@@ -14,6 +14,12 @@
   src: url(assets/fonts/simpler_mono_hagilda/SimplerPro_HLAR_Mono-Bold.woff);
 }
 
+@font-face {
+  font-family: VcDavid;
+  font-weight: 700;
+  src: url(assets/fonts/david_bezalel/VC_david-Bold.otf);
+}
+
 /* Variables */
 :root {
   --important: red !important;
@@ -22,8 +28,9 @@
   --small-padding: 0.7rem;
   --big-padding: 1.5rem;
   --small-mono-font: 400 1rem/1.2rem SimplerMono;
-  --accent-color: black;
+  --accent-color: rgb(159, 140, 118);
   --theme-color: blue;
+  --third-color: rgb(159, 140, 118);
   --base-font-size: 16px;
   --gradient-size: 73%;
 }
@@ -75,7 +82,7 @@ header {
 }
 
 header > * {
-  background-image: linear-gradient(to left, black, white);
+  background-image: linear-gradient(to left, var(--accent-color), white);
 }
 
 header :last-child {
@@ -87,9 +94,8 @@ header :last-child {
   position: absolute;
   height: 3px;
   width: 3px;
-  background: black;
+  background: var(--accent-color);
   border-radius: 2px;
-  background: black;
 }
 
 main {
@@ -122,6 +128,7 @@ input {
 li {
   list-style-type: none;
   display: block;
+  pointer-events: none;
 }
 
 input {
@@ -138,7 +145,7 @@ input {
 li > h2::before,
 .input-span::before {
   /* content: "> \00a0"; */
-  content: ">";
+  content: attr(anchor);
   margin-left: 0.5rem;
 }
 
@@ -148,7 +155,7 @@ li > h2::before,
 
 ::selection {
   color: white;
-  background-color: red;
+  background-color: var(--third-color);
 }
 
 .selected h2,
@@ -156,6 +163,13 @@ li > h2::before,
   color: white;
   background-color: var(--theme-color);
   display: inline-block;
+}
+
+input {
+  border-bottom-style: dashed;
+  border-bottom-width: 2px;
+  color: var(--theme-color);
+
 }
 
 input:focus-visible {
@@ -166,21 +180,30 @@ input:focus-visible {
   color: var(--theme-color);
   border-bottom-style: solid;
   border-bottom-width: 2px;
+  border-color: var(--theme-color);
 
   border-radius: 0;
   /* background-color: red !important; */
 }
+.selected input {
+  border-style: none;
+}
 
 h2 {
-  display: block;
+  /* display: inline-block; */
   position: sticky;
   top: 0;
   background: white;
+  /* text-indent: -15px;
+  margin-right: 15px; */
 }
 
 ul {
   display: none;
   transition: max-height 0.2s ease-out;
+  background: white;
+  z-index: 99999999;
+
 }
 
 * {
@@ -196,4 +219,25 @@ h2,
 input {
   margin-top: -0.1px;
   margin-bottom: -0.1px;
+  pointer-events: all;
+}
+
+h2.thought{
+  font-family: VcDavid;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration-style: wavy;
+  text-decoration-line: underline;
+  /* text-decoration-style: solid; */
+  padding-bottom: 4px;
+  text-underline-offset: 2px;
+  
+}
+
+h2.thought::before {
+  content: '$';
+  font-family: SimplerMono;
+  font-weight: 400;
+  display: inline-block;
+  text-decoration: none;
 }

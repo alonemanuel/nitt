@@ -6,6 +6,213 @@ var completedTask = document.getElementById('completedTasks');
 const MAGIC_NUMBER = 17;
 
 var data = `{
+  "name": "דברים",
+  "content": [
+    {
+      "name": "חפצים",
+      "content": [
+        {
+          "name": "$חפצים ישנים",
+          "content": [
+            {
+              "name": "חפצים ישנים של סבתא שלי",
+              "content": [
+                {
+                  "name": "טבעות שאמא שלי כבר לא לובשת אף פעם"
+                }
+              ]
+            },
+            {
+              "name": "חפצים ישנים שנהיים צהובים",
+              "content": []
+            },
+            {
+              "name": "כאלה שכבר לא מייצרים יותר",
+              "content": []
+            },
+            {
+              "name": "ישנים אבל שעדיין מייצרים אותם בדיוק כמו פעם",
+              "content": []
+            }
+          ]
+        },
+        {
+          "name": "חפצים ענקיים שאי אפשר להכניס הביתה",
+          "content": [
+            {
+              "name": "צעצועים פרוותיים שחברה שלך נותנת לך בכיתה ד'",
+              "content": []
+            },
+            {
+              "name": "ספות גדולות",
+              "content": []
+            },
+            {
+              "name": "מדפסת ענקית ממש",
+              "content": []
+            },
+            {
+              "name": "מכוניות",
+              "content": []
+            }
+          ]
+        },
+        {
+          "name": "חפצים שיש מהם רק אחד",
+          "content": [
+          {
+            "name": "יצירות אומנות חד פעמיות",
+            "content": []
+          },
+          {
+            "name": "דברים שיש להם פאק מיוחד מהפס ייצור",
+            "content": []
+          },
+          {
+            "name": "הדפסים",
+            "content": []
+          },
+          {
+            "name": "",
+            "content": []
+          }]
+        },
+        {
+          "name": "חפצים שיש במגירה בבית",
+          "content": []
+        }
+      ]
+    },
+    {
+      "name": "חיות",
+      "content": [
+        {
+          "name": "פרות",
+          "content": []
+        },
+        {
+          "name": "אריות",
+          "content": []
+        },
+        {
+          "name": "חיות גדולות",
+          "content": []
+        },
+        {
+          "name": "חיות מפחידות",
+          "content": []
+        },
+        {
+          "name": "חיות שראיתי בדרום אמריקה",
+          "content": []
+        },
+        {
+          "name": "חיות שקשה לצלם",
+          "content": []
+        }
+      ]
+    },
+    {
+      "name": "מכשירים אלקטרוניים",
+      "content": [
+        {
+          "name": "מכשירים עם מסך",
+          "content": []
+        },
+        {
+          "name": "דברים שצופים בהם",
+          "content": []
+        },
+        {
+          "name": "מכשירים שעוזרים להכין אוכל או לשנות לו את הטמפרטורה",
+          "content": []
+        },
+        {
+          "name": "מכשירים שעושים מסאז'",
+          "content": []
+        }
+      ]
+    },
+    {
+      "name": "כלי תחבורה",
+      "content": [
+        {
+          "name": "כלים שמיועדים לבן אדם אחד",
+          "content": []
+        },
+        {
+          "name": "אטובוסים",
+          "content": []
+        },
+        {
+          "name": "דברים שאפשר להגיע איתם מהר לעבודה",
+          "content": []
+        },
+        {
+          "name": "כלים שיש לי",
+          "content": []
+        },
+        {
+          "name": "כלים שקל למות אם משתמשים בהם",
+          "content": []
+        }
+      ]
+    },
+    {
+      "name": "סוגים של מדע",
+      "content": [
+        {
+          "name": "מתמטיקה",
+          "content": []
+        },
+        {
+          "name": "ביולוגיה",
+          "content": []
+        },
+        {
+          "name": "כימיה",
+          "content": []
+        },
+        {
+          "name": "מדע כדור הארץ",
+          "content": []
+        },
+        {
+          "name": "מדעי המחשב",
+          "content": []
+        }
+      ]
+    },
+    {
+      "name": "איברים בגוף",
+      "content": [
+        {
+          "name": "איברים פנימיים",
+          "content": []
+        },
+        {
+          "name": "איברים שמנגנים איתם",
+          "content": []
+        },
+        {
+          "name": "איברים שאפשר לשבור",
+          "content": []
+        },
+        {
+          "name": "איברים שקשורים לאהבה או שאיתם נותנים אהבה",
+          "content": []
+        },
+        {
+          "name": "איברים ששברתי",
+          "content": []
+        }
+      ]
+    }
+  ]
+}
+`
+
+var data2 = `{
     "name": "דברים",
     "content": [
       {
@@ -487,12 +694,15 @@ var lastPressed = -1;
 
 function setAsSelected(element) {
   element.classList.add('selected');
+  element.children[0].setAttribute('anchor', "▾");
+  
   // element.style.display = 'inline-block';
 }
 
 function removeAsSelected(element) {
   element.classList.remove('selected');
   element.style.display = 'block';
+  element.children[0].setAttribute('anchor', ">");
 
 }
 
@@ -538,25 +748,29 @@ function setLiOnClick(clicked, elem, content) {
 function initJsonObj(prevElem, jObj) {
   // console.debug('\n');
   if ('name' in jObj) {
-    console.debug(jObj["name"]);
 
     let listItem = prevElem.appendChild(document.createElement(`li`));
     let itemName = listItem.appendChild(document.createElement(`h2`));
+  itemName.setAttribute('anchor', ">");
+
     // itemName.style.top = `${prevElem.style.top + 25}px`;
     let prevItemName = prevElem.parentElement.children[0];
-    console.debug(prevItemName);
     if (window.getComputedStyle(prevItemName).getPropertyValue(`top`) == 'auto') {
-      console.debug(`setting top = 0`);
       itemName.style.top = `0px`;
       itemName.style.zIndex = 9999999;
       
     } else {
-      console.debug(`setting top = ${window.getComputedStyle(prevItemName).getPropertyValue(`top`)}`);
       itemName.style.top = `${parseInt(window.getComputedStyle(prevItemName).getPropertyValue(`top`)) + MAGIC_NUMBER}px`;
       itemName.style.zIndex = parseInt(window.getComputedStyle(prevItemName).getPropertyValue('z-index')) - 1;
 
     }
-    itemName.textContent = jObj["name"];
+    if (jObj["name"].startsWith('$')) {
+      itemName.textContent = jObj["name"].substring(1);
+      itemName.classList.add('thought');
+    } else {
+      itemName.textContent = jObj["name"];
+
+    }
 
     let itemContent = listItem.appendChild(document.createElement('ul'));
     setLiOnClick(itemName, listItem, itemContent);
@@ -575,19 +789,20 @@ function initJsonObj(prevElem, jObj) {
     //     //validation of the input...
     // }
 
+    appendEmptyInput(itemContent);
 
-    let inputSpan = itemContent.appendChild(document.createElement(`span`));
-    inputSpan.classList.add('input-span');
-    let inputDiv = inputSpan.appendChild(document.createElement(`input`));
-    inputDiv.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
-        let childLi = prependEmptyChild(itemContent, e.target.value, true);
-        inputDiv.value = "";
-        // let newLi = itemContent.appendChild(document.createElement(`li`));
-        // newLi.textContent = "just added this";
-        // inputDiv.style.backgroundColor = "red";
-      }
-    });
+    // let inputSpan = itemContent.appendChild(document.createElement(`span`));
+    // inputSpan.classList.add('input-span');
+    // let inputDiv = inputSpan.appendChild(document.createElement(`input`));
+    // inputDiv.addEventListener("keydown", function (e) {
+    //   if (e.key === "Enter") {
+    //     let childLi = prependEmptyChild(itemContent, e.target.value, true);
+    //     inputDiv.value = "";
+    //     // let newLi = itemContent.appendChild(document.createElement(`li`));
+    //     // newLi.textContent = "just added this";
+    //     // inputDiv.style.backgroundColor = "red";
+    //   }
+    // });
 
     if ('content' in jObj) {
       for (let item of jObj["content"]) {
@@ -614,9 +829,22 @@ function appendEmptyInput(parent) {
   let inputSpan = parent.appendChild(document.createElement(`span`));
   inputSpan.classList.add('input-span');
   let inputDiv = inputSpan.appendChild(document.createElement(`input`));
+  inputSpan.setAttribute('anchor', ">");
+
   inputDiv.addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
-      let childLi = prependEmptyChild(parent, e.target.value, true);
+      let childLi;
+      if (e.target.value.startsWith('$')) {
+        childLi = prependEmptyChild(parent, e.target.value.substring(1), true);
+        let childH2 = childLi.children[0]; 
+        childH2.setAttribute('anchor', '$');
+        childH2.classList.add('thought');
+        // childH2.style.fontFamily = 'VcDavid';
+        // childH2.style.fontWeight= 700;
+      } else {
+        childLi = prependEmptyChild(parent, e.target.value, true);
+        
+      }
       inputDiv.value = "";
       // let newLi = itemContent.appendChild(document.createElement(`li`));
       // newLi.textContent = "just added this";
@@ -634,8 +862,9 @@ function prependEmptyChild(parent, childTextContent, shouldInsertAsSecond) {
   } else {
     childLi = prependChild(parent, document.createElement('li'));
   }
-  // console.debug('errrrr');
   let childH2 = childLi.appendChild(document.createElement('h2'));
+  childH2.setAttribute('anchor', ">");
+
   childH2.textContent = childTextContent;
   let childItemContent = childLi.appendChild(document.createElement('ul'));
   let emptyInput = appendEmptyInput(childItemContent);
@@ -647,10 +876,8 @@ function prependEmptyChild(parent, childTextContent, shouldInsertAsSecond) {
 
 function initElements() {
   let jsonObj = JSON.parse(data);
-  // console.debug(jsonObj);
 
   setBodyOnClick();
-  // console.debug
   initJsonObj(listDivElem, jsonObj);
 }
 

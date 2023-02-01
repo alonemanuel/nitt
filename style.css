@@ -232,7 +232,7 @@ h2.thought {
 }
 
 h2.thought::before {
-  content: "$";
+  content: "&";
   font-family: SimplerMono;
   font-weight: 400;
   display: inline-block;

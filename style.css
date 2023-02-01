@@ -75,15 +75,11 @@ header {
 }
 
 header > * {
-  background-image: linear-gradient(
-    to right,
-    transparent var(--gradient-size),
-    var(--accent-color) 100%
-  );
+  background-image: linear-gradient(to left, black, white);
 }
 
 header :last-child {
-  margin-inline-start: var(--big-padding);
+  /* margin-inline-start: var(--big-padding); */
   /* text-indent: var(--big-padding); */
 }
 
@@ -160,15 +156,17 @@ li > h2::before,
   color: white;
   background-color: var(--theme-color);
   display: inline-block;
-
 }
 
 input:focus-visible {
   outline-color: var(--theme-color);
   outline-offset: 1px;
   background-color: transparent;
-  outline-style: solid;
+  outline-style: none;
   color: var(--theme-color);
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+
   border-radius: 0;
   /* background-color: red !important; */
 }
@@ -192,4 +190,10 @@ ul {
 html,
 body {
   height: 100%;
+}
+
+h2,
+input {
+  margin-top: -0.1px;
+  margin-bottom: -0.1px;
 }

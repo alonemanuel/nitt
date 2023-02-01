@@ -548,7 +548,7 @@ function initJsonObj(prevElem, jObj) {
     if (window.getComputedStyle(prevItemName).getPropertyValue(`top`) == 'auto') {
       console.debug(`setting top = 0`);
       itemName.style.top = `0px`;
-      itemName.style.zIndex = 99999;
+      itemName.style.zIndex = 9999999;
       
     } else {
       console.debug(`setting top = ${window.getComputedStyle(prevItemName).getPropertyValue(`top`)}`);

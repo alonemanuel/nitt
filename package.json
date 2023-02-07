@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/alonemanuel/nitt/issues"
   },
-  "homepage": "https://github.com/alonemanuel/nitt#readme"
+  "homepage": "https://github.com/alonemanuel/nitt#readme",
+  "dependencies": {
+    "firebase": "^9.17.1"
+  }
 }

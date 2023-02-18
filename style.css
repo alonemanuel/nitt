@@ -143,10 +143,14 @@ input {
 } */
 
 li > h2::before,
-.input-span::before {
+input::before {
   /* content: "> \00a0"; */
   content: attr(anchor);
   margin-left: 0.5rem;
+}
+
+.input-span::before {
+  content: '+';
 }
 
 /* .input-span::before {

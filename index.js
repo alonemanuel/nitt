@@ -1155,34 +1155,38 @@ function prependChild(parent, child) {
 function appendEmptyInput(parent) {
   let inputSpan = parent.appendChild(document.createElement(`span`));
   inputSpan.classList.add('input-span');
-  let inputDiv = inputSpan.appendChild(document.createElement(`input`));
-  inputSpan.setAttribute('anchor', ">");
+  let inputDiv = inputSpan.appendChild(document.createElement(`div`));
+  inputDiv.classList.add('input');
+  inputDiv.contentEditable = 'true';
+  // inputDiv.rows = 1;
+  inputDiv.setAttribute('anchor', "+");
 
   inputDiv.addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
+      e.preventDefault();
       let childLi;
-      if (e.target.value.startsWith('&')) {
-        childLi = prependEmptyChild(parent, e.target.value.substring(1), true);
+      if (e.target.innerText.startsWith('&')) {
+        childLi = prependEmptyChild(parent, e.target.innerText.substring(1), true);
         let childH2 = childLi.children[0]; 
         childH2.setAttribute('anchor', '&');
         childH2.classList.add('thought');
         // childH2.style.fontFamily = 'VcDavid';
         // childH2.style.fontWeight= 700;
       } else {
-        childLi = prependEmptyChild(parent, e.target.value, true);
+        childLi = prependEmptyChild(parent, e.target.innerText, true);
         
       }
-      inputDiv.value = "";
+      inputDiv.innerText = "";
       // let newLi = itemContent.appendChild(document.createElement(`li`));
       // newLi.textContent = "just added this";
       // inputDiv.style.backgroundColor = "red";
     }
   });
 
-  let initialWidth = inputDiv.style.width;
-  inputDiv.addEventListener('input', () => {
-    inputDiv.style.width = Math.max(10, inputDiv.value.length) + 'ch'; // set the width based on the number of characters typed
-  });
+//   let initialWidth = inputDiv.style.width;
+//   inputDiv.addEventListener('input', () => {
+//     inputDiv.style.width = `calc(min(100%, ${Math.max(10, inputDiv.innerText.length) + 1 + 'ch'})`; // set the width based on the number of characters typed
+//   });
 }
 
 const ITEM_CONTENT_INDEX = 1;

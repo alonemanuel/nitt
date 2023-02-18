@@ -118,11 +118,13 @@ ul span {
   padding-right: 15vw;
 }
 
-input {
+.input {
   list-style-type: none;
+  resize: none;
+  line-height: inherit;
 }
 .input-span {
-  display: block;
+  display: flex;
 }
 
 li {
@@ -131,9 +133,9 @@ li {
   pointer-events: none;
 }
 
-input {
+.input {
   /* min-width: 20ch; */
-  width: 10ch;
+  min-width: 10ch;
   transition: width 0.2s;
   word-wrap: break-word; /* add this property to allow long words to wrap */
   overflow-wrap: break-word; /* add this property for better browser compatibility */
@@ -148,14 +150,18 @@ input {
 } */
 
 li > h2::before,
-input::before {
+.input::before {
   /* content: "> \00a0"; */
   content: attr(anchor);
   margin-left: 0.5rem;
 }
 
+.input::before {
+  content: attr(anchor);
+
+}
+
 .input-span::before {
-  content: '+';
 }
 
 /* .input-span::before {
@@ -168,19 +174,19 @@ input::before {
 }
 
 .selected h2,
-.selected input {
+.selected .input {
   color: white;
   background-color: var(--theme-color);
   display: inline-block;
 }
 
-input {
+.input {
   border-bottom-style: dashed;
   border-bottom-width: 2px;
   color: var(--theme-color);
 }
 
-input:focus-visible {
+.input:focus-visible {
   outline-color: var(--theme-color);
   outline-offset: 1px;
   background-color: transparent;
@@ -193,7 +199,7 @@ input:focus-visible {
   border-radius: 0;
   /* background-color: red !important; */
 }
-.selected input {
+.selected .input {
   border-style: none;
 }
 
@@ -223,7 +229,7 @@ body {
 }
 
 h2,
-input {
+.input {
   margin-top: -0.1px;
   margin-bottom: -0.1px;
   pointer-events: all;

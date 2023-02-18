@@ -1159,7 +1159,7 @@ function appendEmptyInput(parent) {
   inputDiv.classList.add('input');
   inputDiv.contentEditable = 'true';
   // inputDiv.rows = 1;
-  inputDiv.setAttribute('anchor', "+");
+  inputSpan.setAttribute('anchor', "+");
 
   inputDiv.addEventListener("keydown", function (e) {
     if (e.key === "Enter") {

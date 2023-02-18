@@ -150,7 +150,7 @@ li {
 } */
 
 li > h2::before,
-.input::before {
+.input-span::before {
   /* content: "> \00a0"; */
   content: attr(anchor);
   margin-left: 0.5rem;
@@ -174,7 +174,9 @@ li > h2::before,
 }
 
 .selected h2,
-.selected .input {
+.selected .input-span
+{
+  background-clip: content-box;
   color: white;
   background-color: var(--theme-color);
   display: inline-block;
@@ -184,6 +186,7 @@ li > h2::before,
   border-bottom-style: dashed;
   border-bottom-width: 2px;
   color: var(--theme-color);
+  display: inline-block;
 }
 
 .input:focus-visible {

@@ -234,7 +234,7 @@ body {
 h2,
 .input {
   margin-top: -0.1px;
-  margin-bottom: -0.1px;
+  /* margin-bottom: -0.1px; */
   pointer-events: all;
 }
 

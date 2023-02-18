@@ -1178,6 +1178,11 @@ function appendEmptyInput(parent) {
       // inputDiv.style.backgroundColor = "red";
     }
   });
+
+  let initialWidth = inputDiv.style.width;
+  inputDiv.addEventListener('input', () => {
+    inputDiv.style.width = Math.max(10, inputDiv.value.length) + 'ch'; // set the width based on the number of characters typed
+  });
 }
 
 const ITEM_CONTENT_INDEX = 1;

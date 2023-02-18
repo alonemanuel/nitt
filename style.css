@@ -132,10 +132,15 @@ li {
 }
 
 input {
+  /* min-width: 20ch; */
   width: 10ch;
+  transition: width 0.2s;
+  word-wrap: break-word; /* add this property to allow long words to wrap */
+  overflow-wrap: break-word; /* add this property for better browser compatibility */
   border-style: none;
   /* border-bottom: solid 2px ; */
   cursor: auto;
+  transition: width 0.2s;
 }
 
 /* ul > * > * :not(.ul) ::before {

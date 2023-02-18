@@ -224,11 +224,18 @@ ul {
 
 * {
   cursor: default;
+  /* border-style: solid; */
 }
 
 html,
 body {
   height: 100%;
+}
+
+.char-count {
+  position: absolute;
+  /* display: none; */
+
 }
 
 h2,

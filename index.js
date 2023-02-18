@@ -1158,6 +1158,9 @@ function appendEmptyInput(parent) {
   let inputDiv = inputSpan.appendChild(document.createElement(`div`));
   inputDiv.classList.add('input');
   inputDiv.contentEditable = 'true';
+  // let charCount = inputDiv.appendChild(document.createElement('span'));
+  // charCount.innerText = '14/40';
+  // charCount.classList.add('char-count');
   // inputDiv.rows = 1;
   inputSpan.setAttribute('anchor', "+");
 

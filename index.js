@@ -6,6 +6,7 @@ import {
   update,
   remove,
   onValue,
+  limitToLast,
   onChildAdded, onChildChanged,
   // addValueEventListener,
   ref,
@@ -1249,10 +1250,10 @@ function prependEmptyChild(parent, childTextContent, shouldInsertAsSecond, paren
   } else {
     childLi = prependChild(parent, document.createElement('li'));
   }
-  let childH2 = childLi.appendChild(document.createElement('h2'));
-  childH2.setAttribute('anchor', ">");
+  // let childH2 = childLi.appendChild(document.createElement('h2'));
+  // childH2.setAttribute('anchor', ">");
 
-  childH2.textContent = childTextContent;
+  // childH2.textContent = childTextContent;
   let childItemContent = childLi.appendChild(document.createElement('ul'));
   console.debug(`appending empty input as this path: ${parentPath}`);
   let emptyInput = appendEmptyInput(childItemContent, `${parentPath}`);
@@ -1269,15 +1270,100 @@ function initElements() {
   initJsonObj(listDivElem, jsonObj);
 }
 
+function initFireObj(prevElem, parentPath, textContent) {
+  if (!textContent) {
+    return;
+  }
 
-function initFireObj(prevElem, parentPath) {
+  let parentListItem = prevElem.appendChild(document.createElement(`li`));
+  let itemName = parentListItem.appendChild(document.createElement(`h2`));
+  itemName.setAttribute('anchor', ">");
+
+
+  // itemName.style.top = `${prevElem.style.top + 25}px`;
+  let prevItemName = prevElem.parentElement.children[0];
+  if (window.getComputedStyle(prevItemName).getPropertyValue(`top`) == 'auto') {
+    itemName.style.top = `0px`;
+    itemName.style.zIndex = 9999999;
+
+  } else {
+    itemName.style.top = `${parseInt(window.getComputedStyle(prevItemName).getPropertyValue(`top`)) + MAGIC_NUMBER}px`;
+    itemName.style.zIndex = parseInt(window.getComputedStyle(prevItemName).getPropertyValue('z-index')) - 1;
+
+  }
+
+  itemName.textContent = textContent;
+
+
+  let parentItemContent = parentListItem.appendChild(document.createElement('ul'));
+  setLiOnClick(itemName, parentListItem, parentItemContent);
+
+  appendEmptyInput(parentItemContent, `${parentPath}`);
+
+  // appendEmptyInput(prevElem, parentPath);
+  onChildAdded(ref(db, parentPath), (data) => {
+    if (!data.val().content) {
+      return;
+    }
+    console.debug(`just added to: things: ${data.val()}`);
+
+    let listItem = parentItemContent.appendChild(document.createElement(`li`));
+    let itemName = listItem.appendChild(document.createElement(`h2`));
+    itemName.setAttribute('anchor', ">");
+
+
+    // itemName.style.top = `${prevElem.style.top + 25}px`;
+    let prevItemName = parentItemContent.parentElement.children[0];
+    if (window.getComputedStyle(prevItemName).getPropertyValue(`top`) == 'auto') {
+      itemName.style.top = `0px`;
+      itemName.style.zIndex = 9999999;
+
+    } else {
+      itemName.style.top = `${parseInt(window.getComputedStyle(prevItemName).getPropertyValue(`top`)) + MAGIC_NUMBER}px`;
+      itemName.style.zIndex = parseInt(window.getComputedStyle(prevItemName).getPropertyValue('z-index')) - 1;
+
+    }
+
+    itemName.textContent = data.val().content;
+
+
+    let itemContent = listItem.appendChild(document.createElement('ul'));
+    setLiOnClick(itemName, listItem, itemContent);
+
+    appendEmptyInput(itemContent, `${parentPath}/${data.key}`);
+
+
+    data.forEach((childSnapshot) => {
+      // console.debug(childSnapshot.key);
+      // console.debug(`pp: ${parentPath}, ${childSnapshot.val().content})`);
+      if (childSnapshot.key) {
+        let childPath = `${parentPath}/${data.key}/${childSnapshot.key}`;
+        initFireObj(itemContent, childPath, childSnapshot.val().content);
+
+
+
+      }
+    })
+
+
+  }, { onlyOnce: false });
+}
+
+function oldinitFireObj(prevElem, parentPath) {
+  // onChildAdded(ref(db, parentPath), (data) => {
+  //   console.debug('parent child added');
+  //   console.debug(data.val().content);
+  //   // initFireObj()
+  //   // initFireObj(prevElem, )
+  // });
 
 
   get(ref(db, parentPath)).then((snapshot) => {
-    if (!snapshot.val().content){
+
+    if (!snapshot.val().content) {
       return;
     }
-    console.debug(`content: ${snapshot.val().content}`);
+    // console.debug(`content: ${snapshot.val().content}`);
 
     let listItem = prevElem.appendChild(document.createElement(`li`));
     let itemName = listItem.appendChild(document.createElement(`h2`));
@@ -1317,7 +1403,22 @@ function initFireObj(prevElem, parentPath) {
       // console.debug(childSnapshot.key);
       // console.debug(`pp: ${parentPath}, ${childSnapshot.val().content})`);
       if (childSnapshot.key) {
-        initFireObj(itemContent, `${parentPath}/${childSnapshot.key}`)
+        let childPath = `${parentPath}/${childSnapshot.key}`;
+        initFireObj(itemContent, childPath);
+        // onChildAdded(ref(db, childPath), (data) => {
+        //   { console.debug(`pathref : ${childPath}, data: ${data}`) };
+        // });
+        // onChildAdded(ref(db, childPath), (data) => {
+        //   console.debug('child addexxxxd');
+        //   console.debug(data.val().content);
+        //   initFireObj(itemContent, childPath)
+        // });
+
+        // onChildAdded(thingsRef0, (data) => {
+        //   console.debug('child reffffffffff added');
+        //   console.debug(data.val());
+        //   initFireObj(listDivElem, `things/${data.key}`)
+        // });
 
       }
       // console.debug(childSnapshot.val().content);
@@ -1444,20 +1545,28 @@ function initFirebaseTest() {
 
 }
 
+
 function initElementFromFirebase() {
   appendEmptyInput(listDivElem, 'things')
   let thingsRef0 = ref(db, 'things');
-  get(thingsRef0).then((snapshot) => {
-    snapshot.forEach((childSnapshot) => {
-      // console.debug(childSnapshot.val().content);
-      initFireObj(listDivElem, `things/${childSnapshot.key}`)
-      // console.debug(childSnapshot.key);
-    });
-  });
+
+
+  // get(thingsRef0).then((snapshot) => {
+  //   snapshot.forEach((childSnapshot) => {
+  //     // console.debug(childSnapshot.val().content);
+  //     initFireObj(listDivElem, `things/${childSnapshot.key}`)
+  //     // console.debug(childSnapshot.key);
+  //   },{onlyOnce: true});
+
+  // }
+  // )
+  onChildAdded(thingsRef0, (data) => {
+    // console.debug('child reffffffffff added');
+    console.debug(`just added to: things: ${data.val()}`);
+    initFireObj(listDivElem, `things/${data.key}`, data.val().content);
+  }, { onlyOnce: false });
   setBodyOnClick();
-
 }
-
 
 
 
@@ -1465,7 +1574,7 @@ function main() {
   // initDrawing();
   // animate();
   // initElements();
-initElementFromFirebase();
+  initElementFromFirebase();
   // initFirebaseTest();
 
 }

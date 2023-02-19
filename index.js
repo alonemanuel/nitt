@@ -6,6 +6,7 @@ import {
   update,
   remove,
   onValue,
+  limitToLast,
   onChildAdded, onChildChanged,
   // addValueEventListener,
   ref,
@@ -1271,10 +1272,16 @@ function initElements() {
 
 
 function initFireObj(prevElem, parentPath) {
+  // onChildAdded(ref(db, parentPath), (data) => {
+  //   console.debug('parent child added');
+  //   console.debug(data.val().content);
+  //   // initFireObj()
+  //   // initFireObj(prevElem, )
+  // });
 
 
   get(ref(db, parentPath)).then((snapshot) => {
-    if (!snapshot.val().content){
+    if (!snapshot.val().content) {
       return;
     }
     console.debug(`content: ${snapshot.val().content}`);
@@ -1317,7 +1324,22 @@ function initFireObj(prevElem, parentPath) {
       // console.debug(childSnapshot.key);
       // console.debug(`pp: ${parentPath}, ${childSnapshot.val().content})`);
       if (childSnapshot.key) {
-        initFireObj(itemContent, `${parentPath}/${childSnapshot.key}`)
+        let childPath = `${parentPath}/${childSnapshot.key}`;
+        initFireObj(itemContent, childPath);
+        onChildAdded(ref(db, childPath), (data) => {
+          { console.debug(`pathref : ${childPath}, data: ${data}`) };
+        });
+        // onChildAdded(ref(db, childPath), (data) => {
+        //   console.debug('child addexxxxd');
+        //   console.debug(data.val().content);
+        //   initFireObj(itemContent, childPath)
+        // });
+
+        // onChildAdded(thingsRef0, (data) => {
+        //   console.debug('child reffffffffff added');
+        //   console.debug(data.val());
+        //   initFireObj(listDivElem, `things/${data.key}`)
+        // });
 
       }
       // console.debug(childSnapshot.val().content);
@@ -1444,20 +1466,28 @@ function initFirebaseTest() {
 
 }
 
+
 function initElementFromFirebase() {
   appendEmptyInput(listDivElem, 'things')
   let thingsRef0 = ref(db, 'things');
-  get(thingsRef0).then((snapshot) => {
-    snapshot.forEach((childSnapshot) => {
-      // console.debug(childSnapshot.val().content);
-      initFireObj(listDivElem, `things/${childSnapshot.key}`)
-      // console.debug(childSnapshot.key);
-    });
-  });
+
+
+  // get(thingsRef0).then((snapshot) => {
+  //   snapshot.forEach((childSnapshot) => {
+  //     // console.debug(childSnapshot.val().content);
+  //     initFireObj(listDivElem, `things/${childSnapshot.key}`)
+  //     // console.debug(childSnapshot.key);
+  //   },{onlyOnce: true});
+
+  // }
+  // )
+  onChildAdded(thingsRef0, (data) => {
+    console.debug('child reffffffffff added');
+    console.debug(data.val());
+    initFireObj(listDivElem, `things/${data.key}`)
+  }, {onlyOnce: false});
   setBodyOnClick();
-
 }
-
 
 
 
@@ -1465,7 +1495,7 @@ function main() {
   // initDrawing();
   // animate();
   // initElements();
-initElementFromFirebase();
+  initElementFromFirebase();
   // initFirebaseTest();
 
 }

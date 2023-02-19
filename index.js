@@ -1281,10 +1281,11 @@ function initFireObj(prevElem, parentPath) {
 
 
   get(ref(db, parentPath)).then((snapshot) => {
+
     if (!snapshot.val().content) {
       return;
     }
-    console.debug(`content: ${snapshot.val().content}`);
+    // console.debug(`content: ${snapshot.val().content}`);
 
     let listItem = prevElem.appendChild(document.createElement(`li`));
     let itemName = listItem.appendChild(document.createElement(`h2`));
@@ -1482,8 +1483,8 @@ function initElementFromFirebase() {
   // }
   // )
   onChildAdded(thingsRef0, (data) => {
-    console.debug('child reffffffffff added');
-    console.debug(data.val());
+    // console.debug('child reffffffffff added');
+    console.debug(`just added to: things: ${data.val()}`);
     initFireObj(listDivElem, `things/${data.key}`)
   }, {onlyOnce: false});
   setBodyOnClick();

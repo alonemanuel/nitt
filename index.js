@@ -1454,6 +1454,8 @@ function initElementFromFirebase() {
       // console.debug(childSnapshot.key);
     });
   });
+  setBodyOnClick();
+
 }
 
 

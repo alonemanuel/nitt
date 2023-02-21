@@ -1074,10 +1074,10 @@ function removeAsSelected(element) {
 
 function setBodyOnClick() {
   document.body.addEventListener('click', function (e) {
-    console.debug(lastPressed);
-    console.debug(`'entered outside`);
+    // console.debug(lastPressed);
+    // console.debug(`'entered outside`);
     if (lastPressed != -1) {
-      console.debug(`'entered inside`);
+      // console.debug(`'entered inside`);
       removeAsSelected(lastPressed);
       lastPressed = -1;
     }
@@ -1090,9 +1090,9 @@ function setLiOnClick(clicked, elem, content) {
     if (lastPressed != -1) {
       removeAsSelected(lastPressed);
     }
-    console.debug('\n');
-    console.debug(`last pressed: ${lastPressed}`);
-    console.debug(`clicked: ${clicked}`);
+    // console.debug('\n');
+    // console.debug(`last pressed: ${lastPressed}`);
+    // console.debug(`clicked: ${clicked}`);
     if (lastPressed != elem || content.style.display == 'none') {
       setAsSelected(elem);
       // e.currentTarget.style.color = 'red';
@@ -1185,10 +1185,10 @@ function appendEmptyInput(parent, parentPath) {
   inputDiv.addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
       e.preventDefault();
-      console.debug(`path: ${parentPath}`);
-      console.debug(`before push`);
+      // console.debug(`path: ${parentPath}`);
+      // console.debug(`before push`);
       let childRefKey = push(ref(db, parentPath), { content: e.target.innerText }).key;
-      console.debug(`after push, key: ${childRefKey}`);
+      // console.debug(`after push, key: ${childRefKey}`);
       // let childRefKey = 'dfsfgh';
 
       let childLi;

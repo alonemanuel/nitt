@@ -1491,7 +1491,14 @@ function formatDuration(seconds) {
     }
   }
 
-  return durationString.trim();
+  let trimmed = durationString.trim();
+  if (trimmed == '1 שניות') {
+    return 'שניה';
+  } else if (trimmed == '1 דקות') {
+    return 'דקה';
+  } else {
+    return trimmed;
+  }
 }
 
 

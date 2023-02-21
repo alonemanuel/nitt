@@ -1140,36 +1140,11 @@ function initJsonObj(prevElem, jObj) {
     let itemContent = listItem.appendChild(document.createElement('ul'));
     setLiOnClick(itemName, listItem, itemContent);
 
-    // Init input
-    // let inputDiv = document.createElement(`li`);
-
-    // wage.addEventListener("keydown", function (e) {
-    //     if (e.code === "Enter") {  //checks whether the pressed key is "Enter"
-    //         validate(e);
-    //     }
-    // });
-
-    // function validate(e) {
-    //     var text = e.target.value;
-    //     //validation of the input...
-    // }
 
     let db = getDatabase();
     // console.debug('rrrrrrrrrrr');
     appendEmptyInput(itemContent, 'things');
 
-    // let inputSpan = itemContent.appendChild(document.createElement(`span`));
-    // inputSpan.classList.add('input-span');
-    // let inputDiv = inputSpan.appendChild(document.createElement(`input`));
-    // inputDiv.addEventListener("keydown", function (e) {
-    //   if (e.key === "Enter") {
-    //     let childLi = prependEmptyChild(itemContent, e.target.value, true);
-    //     inputDiv.value = "";
-    //     // let newLi = itemContent.appendChild(document.createElement(`li`));
-    //     // newLi.textContent = "just added this";
-    //     // inputDiv.style.backgroundColor = "red";
-    //   }
-    // });
 
     if ('content' in jObj) {
       for (let item of jObj["content"]) {
@@ -1257,7 +1232,7 @@ function prependEmptyChild(parent, childTextContent, shouldInsertAsSecond, paren
   let childItemContent = childLi.appendChild(document.createElement('ul'));
   console.debug(`appending empty input as this path: ${parentPath}`);
   let emptyInput = appendEmptyInput(childItemContent, `${parentPath}`);
-  setLiOnClick(childH2, childLi, childItemContent);
+  // setLiOnClick(childH2, childLi, childItemContent);
 
   return childLi;
   // let childItemContent =  
@@ -1275,29 +1250,37 @@ function initFireObj(prevElem, parentPath, textContent) {
     return;
   }
 
+  console.debug(`\n\nAt item: ${textContent}`);
+  console.debug(`Initing li element`);
   let parentListItem = prevElem.appendChild(document.createElement(`li`));
+  console.debug(`Initing h2 element`);
   let itemName = parentListItem.appendChild(document.createElement(`h2`));
   itemName.setAttribute('anchor', ">");
-
-
+  itemName.textContent = textContent;
+  
+  
   // itemName.style.top = `${prevElem.style.top + 25}px`;
+  // console.debug(`Initing h2 element`);
   let prevItemName = prevElem.parentElement.children[0];
+  // console.debug(`Initing h2 element`);
   if (window.getComputedStyle(prevItemName).getPropertyValue(`top`) == 'auto') {
     itemName.style.top = `0px`;
     itemName.style.zIndex = 9999999;
-
+    
   } else {
     itemName.style.top = `${parseInt(window.getComputedStyle(prevItemName).getPropertyValue(`top`)) + MAGIC_NUMBER}px`;
     itemName.style.zIndex = parseInt(window.getComputedStyle(prevItemName).getPropertyValue('z-index')) - 1;
-
+    
   }
-
-  itemName.textContent = textContent;
-
-
+  
+  
+  
+  console.debug(`Initing list for curr element`);
   let parentItemContent = parentListItem.appendChild(document.createElement('ul'));
+  console.debug(`Setting on click for the list`);
   setLiOnClick(itemName, parentListItem, parentItemContent);
-
+  
+  console.debug(`Appending empty input for the list`);
   appendEmptyInput(parentItemContent, `${parentPath}`);
 
   // appendEmptyInput(prevElem, parentPath);
@@ -1305,244 +1288,55 @@ function initFireObj(prevElem, parentPath, textContent) {
     if (!data.val().content) {
       return;
     }
-    console.debug(`just added to: things: ${data.val()}`);
 
-    let listItem = parentItemContent.appendChild(document.createElement(`li`));
-    let itemName = listItem.appendChild(document.createElement(`h2`));
-    itemName.setAttribute('anchor', ">");
-
-
-    // itemName.style.top = `${prevElem.style.top + 25}px`;
-    let prevItemName = parentItemContent.parentElement.children[0];
-    if (window.getComputedStyle(prevItemName).getPropertyValue(`top`) == 'auto') {
-      itemName.style.top = `0px`;
-      itemName.style.zIndex = 9999999;
-
-    } else {
-      itemName.style.top = `${parseInt(window.getComputedStyle(prevItemName).getPropertyValue(`top`)) + MAGIC_NUMBER}px`;
-      itemName.style.zIndex = parseInt(window.getComputedStyle(prevItemName).getPropertyValue('z-index')) - 1;
-
-    }
-
-    itemName.textContent = data.val().content;
-
-
-    let itemContent = listItem.appendChild(document.createElement('ul'));
-    setLiOnClick(itemName, listItem, itemContent);
-
-    appendEmptyInput(itemContent, `${parentPath}/${data.key}`);
-
-
-    data.forEach((childSnapshot) => {
+    initFireObj(parentItemContent, `${parentPath}/${data.key}`, data.val().content);
+    
+    
+    // data.forEach((childSnapshot) => {
+      // console.debug(`At for each`);
+      // let listItem = parentItemContent.appendChild(document.createElement(`li`));
+      // let itemName = listItem.appendChild(document.createElement(`h2`));
+      // itemName.setAttribute('anchor', ">");
+  
+  
+      // // itemName.style.top = `${prevElem.style.top + 25}px`;
+      // let prevItemName = parentItemContent.parentElement.children[0];
+      // if (window.getComputedStyle(prevItemName).getPropertyValue(`top`) == 'auto') {
+      //   itemName.style.top = `0px`;
+      //   itemName.style.zIndex = 9999999;
+  
+      // } else {
+      //   itemName.style.top = `${parseInt(window.getComputedStyle(prevItemName).getPropertyValue(`top`)) + MAGIC_NUMBER}px`;
+      //   itemName.style.zIndex = parseInt(window.getComputedStyle(prevItemName).getPropertyValue('z-index')) - 1;
+  
+      // }
+  
+      // itemName.textContent = data.val().content;
+  
+  
+      // let itemContent = listItem.appendChild(document.createElement('ul'));
+      // setLiOnClick(itemName, listItem, itemContent);
+  
+      // appendEmptyInput(itemContent, `${parentPath}/${data.key}`);
       // console.debug(childSnapshot.key);
       // console.debug(`pp: ${parentPath}, ${childSnapshot.val().content})`);
-      if (childSnapshot.key) {
-        let childPath = `${parentPath}/${data.key}/${childSnapshot.key}`;
-        initFireObj(itemContent, childPath, childSnapshot.val().content);
+      // if (childSnapshot.key) {
+        
+        // let childPath = `${parentPath}/${data.key}/${childSnapshot.key}`;
+        
+        
+        
+      // }
+    // console.debug(`\tDoing same for child: ${data.val().content}`);
+    // initFireObj(prevElem, parentPath, textContent)
+
+   
 
 
-
-      }
-    })
+    // })
 
 
   }, { onlyOnce: false });
-}
-
-function oldinitFireObj(prevElem, parentPath) {
-  // onChildAdded(ref(db, parentPath), (data) => {
-  //   console.debug('parent child added');
-  //   console.debug(data.val().content);
-  //   // initFireObj()
-  //   // initFireObj(prevElem, )
-  // });
-
-
-  get(ref(db, parentPath)).then((snapshot) => {
-
-    if (!snapshot.val().content) {
-      return;
-    }
-    // console.debug(`content: ${snapshot.val().content}`);
-
-    let listItem = prevElem.appendChild(document.createElement(`li`));
-    let itemName = listItem.appendChild(document.createElement(`h2`));
-    itemName.setAttribute('anchor', ">");
-
-
-    // itemName.style.top = `${prevElem.style.top + 25}px`;
-    let prevItemName = prevElem.parentElement.children[0];
-    if (window.getComputedStyle(prevItemName).getPropertyValue(`top`) == 'auto') {
-      itemName.style.top = `0px`;
-      itemName.style.zIndex = 9999999;
-
-    } else {
-      itemName.style.top = `${parseInt(window.getComputedStyle(prevItemName).getPropertyValue(`top`)) + MAGIC_NUMBER}px`;
-      itemName.style.zIndex = parseInt(window.getComputedStyle(prevItemName).getPropertyValue('z-index')) - 1;
-
-    }
-
-    itemName.textContent = snapshot.val().content;
-
-    // if (jObj["name"].startsWith('&')) {
-    //   itemName.textContent = jObj["name"].substring(1);
-    //   itemName.classList.add('thought');
-    // } else {
-    //   itemName.textContent = jObj["name"];
-
-    // }
-
-
-    let itemContent = listItem.appendChild(document.createElement('ul'));
-    setLiOnClick(itemName, listItem, itemContent);
-
-    appendEmptyInput(itemContent, `${parentPath}`);
-
-
-    snapshot.forEach((childSnapshot) => {
-      // console.debug(childSnapshot.key);
-      // console.debug(`pp: ${parentPath}, ${childSnapshot.val().content})`);
-      if (childSnapshot.key) {
-        let childPath = `${parentPath}/${childSnapshot.key}`;
-        initFireObj(itemContent, childPath);
-        // onChildAdded(ref(db, childPath), (data) => {
-        //   { console.debug(`pathref : ${childPath}, data: ${data}`) };
-        // });
-        // onChildAdded(ref(db, childPath), (data) => {
-        //   console.debug('child addexxxxd');
-        //   console.debug(data.val().content);
-        //   initFireObj(itemContent, childPath)
-        // });
-
-        // onChildAdded(thingsRef0, (data) => {
-        //   console.debug('child reffffffffff added');
-        //   console.debug(data.val());
-        //   initFireObj(listDivElem, `things/${data.key}`)
-        // });
-
-      }
-      // console.debug(childSnapshot.val().content);
-    })
-    // const data = snapshot.val();
-    // console.debug(`content: ${data}`);
-  }, { onlyOnce: true });
-
-  // // console.debug('\n');
-  // if ('name' in jObj) {
-
-  //   let listItem = prevElem.appendChild(document.createElement(`li`));
-  //   let itemName = listItem.appendChild(document.createElement(`h2`));
-  //   itemName.setAttribute('anchor', ">");
-
-  //   // itemName.style.top = `${prevElem.style.top + 25}px`;
-  //   let prevItemName = prevElem.parentElement.children[0];
-  //   if (window.getComputedStyle(prevItemName).getPropertyValue(`top`) == 'auto') {
-  //     itemName.style.top = `0px`;
-  //     itemName.style.zIndex = 9999999;
-
-  //   } else {
-  //     itemName.style.top = `${parseInt(window.getComputedStyle(prevItemName).getPropertyValue(`top`)) + MAGIC_NUMBER}px`;
-  //     itemName.style.zIndex = parseInt(window.getComputedStyle(prevItemName).getPropertyValue('z-index')) - 1;
-
-  //   }
-  //   if (jObj["name"].startsWith('&')) {
-  //     itemName.textContent = jObj["name"].substring(1);
-  //     itemName.classList.add('thought');
-  //   } else {
-  //     itemName.textContent = jObj["name"];
-
-  //   }
-
-  //   let itemContent = listItem.appendChild(document.createElement('ul'));
-  //   setLiOnClick(itemName, listItem, itemContent);
-
-  //   // Init input
-  //   // let inputDiv = document.createElement(`li`);
-
-  //   // wage.addEventListener("keydown", function (e) {
-  //   //     if (e.code === "Enter") {  //checks whether the pressed key is "Enter"
-  //   //         validate(e);
-  //   //     }
-  //   // });
-
-  //   // function validate(e) {
-  //   //     var text = e.target.value;
-  //   //     //validation of the input...
-  //   // }
-
-  //   let db = getDatabase();
-  //   // console.debug('rrrrrrrrrrr');
-  //   appendEmptyInput(itemContent, 'things');
-
-  //   // let inputSpan = itemContent.appendChild(document.createElement(`span`));
-  //   // inputSpan.classList.add('input-span');
-  //   // let inputDiv = inputSpan.appendChild(document.createElement(`input`));
-  //   // inputDiv.addEventListener("keydown", function (e) {
-  //   //   if (e.key === "Enter") {
-  //   //     let childLi = prependEmptyChild(itemContent, e.target.value, true);
-  //   //     inputDiv.value = "";
-  //   //     // let newLi = itemContent.appendChild(document.createElement(`li`));
-  //   //     // newLi.textContent = "just added this";
-  //   //     // inputDiv.style.backgroundColor = "red";
-  //   //   }
-  //   // });
-
-  //   if ('content' in jObj) {
-  //     for (let item of jObj["content"]) {
-  //       initJsonObj(itemContent, item);
-  //     }
-
-  //   }
-
-  // }
-
-}
-
-
-function initFirebaseTest() {
-  let firebaseDiv = document.body.appendChild(document.createElement('div'));
-  let fireBaseText = firebaseDiv.appendChild(document.createElement('div'));
-  fireBaseText.innerText = 'hello world';
-
-  let inputText = firebaseDiv.appendChild(document.createElement('input'));
-  let insertBtn = firebaseDiv.appendChild(document.createElement('button'));
-  insertBtn.innerText = 'insert'
-
-  let db = getDatabase();
-
-  // // let thingsRef = ref(db, 'People/');
-  // insertBtn.addEventListener('click', function () {
-  //   push(thingsRef, {
-  //     content: 'yo'
-  //   });
-  // });
-
-  // onValue(thingsRef, (snapshot) => {
-  //   const data = snapshot.val();
-  //   console.debug(data[0]);
-  // })
-
-  // const dbref = ref(db);
-  // get(child(dbref, "things"))
-
-  // onChildAdded(ref(db, 'things/-NOaTwUANRXNXu5GTugm'), (data) => {
-  //   console.debug(data.val().content);
-  // });
-
-
-  // onValue(ref(db, 'things'), (snapshot) => {
-  //   snapshot.forEach((childSnapshot) => {
-  //     // console.debug(childSnapshot.key);
-  //     console.debug(childSnapshot.val().content);
-  //   })
-  //   const data = snapshot.val();
-  //   console.debug(`content: ${data}`);
-  // }, {onlyOnce: true});
-
-
-
-  // initFireObj('things');
-
 }
 
 

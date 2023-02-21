@@ -101,6 +101,7 @@ header :last-child {
 main {
   padding: var(--small-padding);
   margin-top: var(--big-padding);
+  padding-bottom: 100px;
 }
 
 /* main > * :first-child::before {

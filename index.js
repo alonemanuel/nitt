@@ -1230,7 +1230,7 @@ function prependEmptyChild(parent, childTextContent, shouldInsertAsSecond, paren
 
   // childH2.textContent = childTextContent;
   let childItemContent = childLi.appendChild(document.createElement('ul'));
-  console.debug(`appending empty input as this path: ${parentPath}`);
+  // console.debug(`appending empty input as this path: ${parentPath}`);
   let emptyInput = appendEmptyInput(childItemContent, `${parentPath}`);
   // setLiOnClick(childH2, childLi, childItemContent);
 
@@ -1250,10 +1250,10 @@ function initFireObj(prevElem, parentPath, textContent) {
     return;
   }
 
-  console.debug(`\n\nAt item: ${textContent}`);
-  console.debug(`Initing li element`);
+  // console.debug(`\n\nAt item: ${textContent}`);
+  // console.debug(`Initing li element`);
   let parentListItem = prevElem.appendChild(document.createElement(`li`));
-  console.debug(`Initing h2 element`);
+  // console.debug(`Initing h2 element`);
   let itemName = parentListItem.appendChild(document.createElement(`h2`));
   itemName.setAttribute('anchor', ">");
   itemName.textContent = textContent;
@@ -1275,12 +1275,12 @@ function initFireObj(prevElem, parentPath, textContent) {
   
   
   
-  console.debug(`Initing list for curr element`);
+  // console.debug(`Initing list for curr element`);
   let parentItemContent = parentListItem.appendChild(document.createElement('ul'));
-  console.debug(`Setting on click for the list`);
+  // console.debug(`Setting on click for the list`);
   setLiOnClick(itemName, parentListItem, parentItemContent);
   
-  console.debug(`Appending empty input for the list`);
+  // console.debug(`Appending empty input for the list`);
   appendEmptyInput(parentItemContent, `${parentPath}`);
 
   // appendEmptyInput(prevElem, parentPath);
@@ -1289,6 +1289,7 @@ function initFireObj(prevElem, parentPath, textContent) {
       return;
     }
 
+    console.debug(`Adding ${data.val().content} to ${textContent}`);
     initFireObj(parentItemContent, `${parentPath}/${data.key}`, data.val().content);
     
     
@@ -1356,7 +1357,7 @@ function initElementFromFirebase() {
   // )
   onChildAdded(thingsRef0, (data) => {
     // console.debug('child reffffffffff added');
-    console.debug(`just added to: things: ${data.val()}`);
+    console.debug(`just added to: things: ${data.val().content}`);
     initFireObj(listDivElem, `things/${data.key}`, data.val().content);
   }, { onlyOnce: false });
   setBodyOnClick();

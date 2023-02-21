@@ -1181,13 +1181,31 @@ function appendEmptyInput(parent, parentPath) {
 
   const db = getDatabase();
 
+  function isInputValid(inputText) {
+    let notEmpty = inputText.replace(/[  ]/g,'').length > 0;
+    return notEmpty;
+  }
 
+  let hasFailedOnce = false;
   inputDiv.addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
       e.preventDefault();
       // console.debug(`path: ${parentPath}`);
       // console.debug(`before push`);
-      let childRefKey = push(ref(db, parentPath), { content: e.target.innerText }).key;
+
+      let innerText = e.target.innerText;
+      if (!isInputValid(innerText)) {
+        inputSpan.setAttribute('anchor', '!');
+        inputDiv.innerText = 'הטקסט חייב להכיל מילה אחת לפחות';
+        hasFailedOnce = true;
+        // setTimeout(() => {
+        //   inputSpan.setAttribute('anchor', '+');
+        //   inputDiv.innerText = '';
+        // }, 4000);
+        return;
+      }
+
+      let childRefKey = push(ref(db, parentPath), { content: innerText }).key;
       // console.debug(`after push, key: ${childRefKey}`);
       // let childRefKey = 'dfsfgh';
 
@@ -1207,6 +1225,10 @@ function appendEmptyInput(parent, parentPath) {
       // let newLi = itemContent.appendChild(document.createElement(`li`));
       // newLi.textContent = "just added this";
       // inputDiv.style.backgroundColor = "red";
+    } else if (hasFailedOnce) {
+      inputDiv.innerText = '';
+      inputSpan.setAttribute('anchor', '+');
+      hasFailedOnce = false;
     }
   });
 

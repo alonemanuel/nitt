@@ -1257,7 +1257,7 @@ function prependEmptyChild(parent, childTextContent, shouldInsertAsSecond, paren
   let childItemContent = childLi.appendChild(document.createElement('ul'));
   console.debug(`appending empty input as this path: ${parentPath}`);
   let emptyInput = appendEmptyInput(childItemContent, `${parentPath}`);
-  setLiOnClick(childH2, childLi, childItemContent);
+  // setLiOnClick(childH2, childLi, childItemContent);
 
   return childLi;
   // let childItemContent =  

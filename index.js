@@ -1143,7 +1143,7 @@ function initJsonObj(prevElem, jObj) {
 
     let db = getDatabase();
     // console.debug('rrrrrrrrrrr');
-    appendEmptyInput(itemContent, 'things');
+    appendEmptyInput(itemContent, 'things', 'Lorem');
 
 
     if ('content' in jObj) {
@@ -1166,8 +1166,13 @@ function prependChild(parent, child) {
   parent.prepend(child);
   return child;
 }
+function isInputValid(inputText) {
+  let notEmpty = inputText.replace(/[  ]/g, '').length > 0;
+  let isMalicious = (inputText.toLowerCase().includes("table"));
+  return notEmpty && !isMalicious;
+}
 
-function appendEmptyInput(parent, parentPath) {
+function appendEmptyInput(parent, parentPath, parentText) {
   let inputSpan = parent.appendChild(document.createElement(`span`));
   inputSpan.classList.add('input-span');
   let inputDiv = inputSpan.appendChild(document.createElement(`div`));
@@ -1181,10 +1186,6 @@ function appendEmptyInput(parent, parentPath) {
 
   const db = getDatabase();
 
-  function isInputValid(inputText) {
-    let notEmpty = inputText.replace(/[  ]/g,'').length > 0;
-    return notEmpty;
-  }
 
   let hasFailedOnce = false;
   inputDiv.addEventListener("keydown", function (e) {
@@ -1206,6 +1207,13 @@ function appendEmptyInput(parent, parentPath) {
       }
 
       let childRefKey = push(ref(db, parentPath), { content: innerText }).key;
+      console.debug('\n\n\n\n\nsetting last item...');
+      set(lastEditMainItemRef, {
+        content: innerText,
+        parent: parentText,
+        timestamp: Math.floor(Date.now() / 1000)
+      });
+
       // console.debug(`after push, key: ${childRefKey}`);
       // let childRefKey = 'dfsfgh';
 
@@ -1239,6 +1247,13 @@ function appendEmptyInput(parent, parentPath) {
 }
 const db = getDatabase();
 const ITEM_CONTENT_INDEX = 1;
+var lastEditRef = ref(db, 'lastedit');
+var lastEditMainItemRef = ref(db, 'lastedit/mainitem');
+
+var lastEditChild = document.getElementById('lastedit-child');
+var lastEditParent = document.getElementById('lastedit-parent');
+var lastEditTime = document.getElementById('lastedit-timepassed');
+
 function prependEmptyChild(parent, childTextContent, shouldInsertAsSecond, parentPath) {
   // let itemContent = parent.children[ITEM_CONTENT_INDEX];
   let childLi;
@@ -1253,7 +1268,7 @@ function prependEmptyChild(parent, childTextContent, shouldInsertAsSecond, paren
   // childH2.textContent = childTextContent;
   let childItemContent = childLi.appendChild(document.createElement('ul'));
   // console.debug(`appending empty input as this path: ${parentPath}`);
-  let emptyInput = appendEmptyInput(childItemContent, `${parentPath}`);
+  let emptyInput = appendEmptyInput(childItemContent, `${parentPath}`, 'LOREM');
   // setLiOnClick(childH2, childLi, childItemContent);
 
   return childLi;
@@ -1279,8 +1294,8 @@ function initFireObj(prevElem, parentPath, textContent) {
   let itemName = parentListItem.appendChild(document.createElement(`h2`));
   itemName.setAttribute('anchor', ">");
   itemName.textContent = textContent;
-  
-  
+
+
   // itemName.style.top = `${prevElem.style.top + 25}px`;
   // console.debug(`Initing h2 element`);
   let prevItemName = prevElem.parentElement.children[0];
@@ -1288,24 +1303,23 @@ function initFireObj(prevElem, parentPath, textContent) {
   if (window.getComputedStyle(prevItemName).getPropertyValue(`top`) == 'auto') {
     itemName.style.top = `0px`;
     itemName.style.zIndex = 9999999;
-    
+
   } else {
     itemName.style.top = `${parseInt(window.getComputedStyle(prevItemName).getPropertyValue(`top`)) + MAGIC_NUMBER}px`;
     itemName.style.zIndex = parseInt(window.getComputedStyle(prevItemName).getPropertyValue('z-index')) - 1;
-    
+
   }
-  
-  
-  
+
+
+
   // console.debug(`Initing list for curr element`);
   let parentItemContent = parentListItem.appendChild(document.createElement('ul'));
   // console.debug(`Setting on click for the list`);
   setLiOnClick(itemName, parentListItem, parentItemContent);
-  
-  // console.debug(`Appending empty input for the list`);
-  appendEmptyInput(parentItemContent, `${parentPath}`);
 
-  // appendEmptyInput(prevElem, parentPath);
+  // console.debug(`Appending empty input for the list`);
+  appendEmptyInput(parentItemContent, `${parentPath}`, itemName.textContent);
+
   onChildAdded(ref(db, parentPath), (data) => {
     if (!data.val().content) {
       return;
@@ -1313,47 +1327,47 @@ function initFireObj(prevElem, parentPath, textContent) {
 
     console.debug(`Adding ${data.val().content} to ${textContent}`);
     initFireObj(parentItemContent, `${parentPath}/${data.key}`, data.val().content);
-    
-    
+
+
     // data.forEach((childSnapshot) => {
-      // console.debug(`At for each`);
-      // let listItem = parentItemContent.appendChild(document.createElement(`li`));
-      // let itemName = listItem.appendChild(document.createElement(`h2`));
-      // itemName.setAttribute('anchor', ">");
-  
-  
-      // // itemName.style.top = `${prevElem.style.top + 25}px`;
-      // let prevItemName = parentItemContent.parentElement.children[0];
-      // if (window.getComputedStyle(prevItemName).getPropertyValue(`top`) == 'auto') {
-      //   itemName.style.top = `0px`;
-      //   itemName.style.zIndex = 9999999;
-  
-      // } else {
-      //   itemName.style.top = `${parseInt(window.getComputedStyle(prevItemName).getPropertyValue(`top`)) + MAGIC_NUMBER}px`;
-      //   itemName.style.zIndex = parseInt(window.getComputedStyle(prevItemName).getPropertyValue('z-index')) - 1;
-  
-      // }
-  
-      // itemName.textContent = data.val().content;
-  
-  
-      // let itemContent = listItem.appendChild(document.createElement('ul'));
-      // setLiOnClick(itemName, listItem, itemContent);
-  
-      // appendEmptyInput(itemContent, `${parentPath}/${data.key}`);
-      // console.debug(childSnapshot.key);
-      // console.debug(`pp: ${parentPath}, ${childSnapshot.val().content})`);
-      // if (childSnapshot.key) {
-        
-        // let childPath = `${parentPath}/${data.key}/${childSnapshot.key}`;
-        
-        
-        
-      // }
+    // console.debug(`At for each`);
+    // let listItem = parentItemContent.appendChild(document.createElement(`li`));
+    // let itemName = listItem.appendChild(document.createElement(`h2`));
+    // itemName.setAttribute('anchor', ">");
+
+
+    // // itemName.style.top = `${prevElem.style.top + 25}px`;
+    // let prevItemName = parentItemContent.parentElement.children[0];
+    // if (window.getComputedStyle(prevItemName).getPropertyValue(`top`) == 'auto') {
+    //   itemName.style.top = `0px`;
+    //   itemName.style.zIndex = 9999999;
+
+    // } else {
+    //   itemName.style.top = `${parseInt(window.getComputedStyle(prevItemName).getPropertyValue(`top`)) + MAGIC_NUMBER}px`;
+    //   itemName.style.zIndex = parseInt(window.getComputedStyle(prevItemName).getPropertyValue('z-index')) - 1;
+
+    // }
+
+    // itemName.textContent = data.val().content;
+
+
+    // let itemContent = listItem.appendChild(document.createElement('ul'));
+    // setLiOnClick(itemName, listItem, itemContent);
+
+    // appendEmptyInput(itemContent, `${parentPath}/${data.key}`);
+    // console.debug(childSnapshot.key);
+    // console.debug(`pp: ${parentPath}, ${childSnapshot.val().content})`);
+    // if (childSnapshot.key) {
+
+    // let childPath = `${parentPath}/${data.key}/${childSnapshot.key}`;
+
+
+
+    // }
     // console.debug(`\tDoing same for child: ${data.val().content}`);
     // initFireObj(prevElem, parentPath, textContent)
 
-   
+
 
 
     // })
@@ -1364,7 +1378,7 @@ function initFireObj(prevElem, parentPath, textContent) {
 
 
 function initElementFromFirebase() {
-  appendEmptyInput(listDivElem, 'things')
+  appendEmptyInput(listDivElem, 'things', 'דברים')
   let thingsRef0 = ref(db, 'things');
 
 
@@ -1385,12 +1399,112 @@ function initElementFromFirebase() {
   setBodyOnClick();
 }
 
+var intervalId;
+function updateAndIntervalLastEdit(parent, content, timestamp) {
+  // return;
+  clearInterval(intervalId);
+  lastEditParent.innerText = parent;
+  lastEditChild.innerText = content;
+  let nowInSecs = Math.floor(Date.now() / 1000);
+  lastEditTime.innerText = getTimeElpasedString(timestamp, nowInSecs)
+  let interval;
+  let secsLeapsed = timestamp - nowInSecs;
+  if (secsLeapsed < 60) {
+    interval = 1000;
+  } else {
+    interval = 1000 * 30;
 
+  }
+
+  intervalId = setInterval(() => {
+    lastEditParent.innerText = parent;
+    lastEditChild.innerText = content;
+    lastEditTime.innerText = getTimeElpasedString(timestamp, Math.floor(Date.now() / 1000))
+
+  }, interval);
+}
+
+function initLastEdit() {
+
+  console.debug(`getting`);
+  get(lastEditMainItemRef).then((data) => {
+    // console.debug(`\n\n\n\n\n\n\n\n\ngetting:`);
+    // console.debug(`got: ${data.val().content}`);
+
+    updateAndIntervalLastEdit(data.val().parent, data.val().content, data.val().timestamp);
+    // lastEditParent.innerText = data.val().parent;
+    // lastEditChild.innerText = data.val().content;
+    // lastEditTime.innerText = getTimeElpasedString(data.val().timestamp, Math.floor(Date.now() / 1000))
+    // setInterval(() => {
+    //   lastEditParent.innerText = data.val().parent;
+    //   lastEditChild.innerText = data.val().content;
+    //   lastEditTime.innerText = getTimeElpasedString(data.val().timestamp, Math.floor(Date.now() / 1000));
+
+    // }, 10000);
+  });
+
+
+  // set(lastEditMainItemRef, {
+  //   content: "ניסיון",
+  //   timestamp: 1677012337745,
+  //   parent: "אבא של ניסיון"
+  // })
+
+  onChildChanged(lastEditRef, (data) => {
+    let val = data.val();
+    updateAndIntervalLastEdit(val.parent, val.content, val.timestamp);
+    // lastEditParent.innerText = data.val().parent;
+    // lastEditChild.innerText = data.val().content;
+    // lastEditTime.innerText = getTimeElpasedString(data.val().timestamp, Math.floor(Date.now() / 1000));
+    // setInterval(() => {
+    //   console.debug(`\n\n\n********\nIn onchildchanged of last edit`);
+    //   console.debug(data.val().content);
+    //   lastEditParent.innerText = data.val().parent;
+    //   lastEditChild.innerText = data.val().content;
+    //   lastEditTime.innerText = getTimeElpasedString(data.val().timestamp, Math.floor(Date.now() / 1000));
+
+    // }, 10000);
+  }, { onlyOnce: false });
+}
+
+function formatDuration(seconds) {
+  if (seconds == 0) {
+    return "0 שניות";
+  }
+  const units = [
+    { label: "ימים", duration: 86400 },
+    { label: "שעות", duration: 3600 },
+    { label: "דקות", duration: 60 },
+    { label: "שניות", duration: 1 },
+  ];
+
+  let remainingSeconds = seconds;
+  let durationString = "";
+
+  for (let i = 0; i < units.length; i++) {
+    const unit = units[i];
+    const count = Math.floor(remainingSeconds / unit.duration);
+    remainingSeconds -= count * unit.duration;
+    if (count > 0) {
+      durationString += `${count} ${unit.label}${count > 1 ? "" : ""} `;
+      break;
+    }
+  }
+
+  return durationString.trim();
+}
+
+
+function getTimeElpasedString(firstSeconds, nowSeconds) {
+  let secondsElapsed = nowSeconds - firstSeconds;
+  return formatDuration(secondsElapsed);
+}
 
 function main() {
   // initDrawing();
   // animate();
   // initElements();
+  initLastEdit();
   initElementFromFirebase();
   // initFirebaseTest();
 

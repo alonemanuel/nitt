@@ -122,6 +122,7 @@ ul span {
   list-style-type: none;
   resize: none;
   line-height: inherit;
+  margin-bottom: 4px;
 }
 .input-span {
   display: flex;

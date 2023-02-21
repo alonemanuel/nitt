@@ -186,7 +186,7 @@ li > h2::before,
 .input {
   border-bottom-style: dashed;
   border-bottom-width: 2px;
-  color: var(--theme-color);
+  /* color: var(--theme-color); */
   display: inline-block;
 }
 
@@ -275,4 +275,16 @@ h2.thought::before {
 
 body {
   padding-bottom: 300px;
+}
+
+footer{
+  z-index: 99999999;
+  position: fixed;
+  bottom: 0;
+  background-color: white;
+  padding: 6px;
+  color: black;
+}
+footer .child {
+  text-decoration-line: underline;
 }

@@ -116,7 +116,10 @@ main > * {
 
 ul li,
 ul span {
-  padding-right: 15vw;
+  /* padding-right: 15vw; */
+  /* padding-right: 15vw; */
+  padding-right: clamp(7ch, 12ch, 10vw);
+
 }
 
 .input {

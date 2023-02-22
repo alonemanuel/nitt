@@ -1314,6 +1314,7 @@ function initFireObj(prevElem, parentPath, textContent) {
 
   // console.debug(`Initing list for curr element`);
   let parentItemContent = parentListItem.appendChild(document.createElement('ul'));
+  itemName.classList.add('thought');
   // console.debug(`Setting on click for the list`);
   setLiOnClick(itemName, parentListItem, parentItemContent);
 
@@ -1324,7 +1325,9 @@ function initFireObj(prevElem, parentPath, textContent) {
     if (!data.val().content) {
       return;
     }
-
+    itemName.classList.remove('thought');
+    // console.debug(parentItemContent);
+    // console.debug(`is not a leaf`);
     console.debug(`Adding ${data.val().content} to ${textContent}`);
     initFireObj(parentItemContent, `${parentPath}/${data.key}`, data.val().content);
 
